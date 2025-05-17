@@ -1,0 +1,74 @@
+<<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Identificador de Bandeira de Cartão</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .container {
+        max-width: 400px;
+        text-align: center;
+        padding: 20px;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+      }
+      input,
+      button {
+        padding: 10px;
+        margin: 10px 0;
+        width: 100%;
+      }
+      p {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Identificador de Bandeira de Cartão</h2>
+      <input
+        type="text"
+        id="numeroCartao"
+        placeholder="Digite o número do cartão"
+      />
+      <button onclick="identificarBandeira()">Identificar Bandeira</button>
+      <p id="resultado">Bandeira:</p>
+    </div>
+
+    <script>
+      function identificarBandeira() {
+        const cartao = document
+          .getElementById('numeroCartao')
+          .value.replace(/\s|-/g, '');
+        const padroes = {
+          Visa: /^4[0-9]{12}(?:[0-9]{3})?$/,
+          MasterCard: /^(5[1-5][0-9]{14}|2[2-7][0-9]{14})$/,
+          'American Express': /^3[47][0-9]{13}$/,
+          JCB: /^(?:2131|1800|35\d{3})\d{11}$/,
+          HiperCard: /^(606282|3841)\d{10,12}$/,
+          'Diners Club': /^3(?:0[0-5]|[68][0-9])[0-9]{11}$/,
+          Discover: /^6(?:011|5[0-9]{2})[0-9]{12}$/,
+        };
+
+        for (const bandeira in padroes) {
+          if (padroes[bandeira].test(cartao)) {
+            document.getElementById('resultado').innerText =
+              'Bandeira: ' + bandeira;
+            return;
+          }
+        }
+
+        document.getElementById('resultado').innerText =
+          'Bandeira: desconhecida';
+      }
+    </script>
+  </body>
+</html>
